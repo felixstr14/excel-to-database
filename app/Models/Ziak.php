@@ -13,6 +13,7 @@ class Ziak extends Model
     protected $fillable = [
         'meno',
         'priezvisko',
-        'stipendium'
+        'stipendium',
+        'isic'
     ];
 }
