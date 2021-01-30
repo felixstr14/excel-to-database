@@ -11,14 +11,24 @@ use function PHPUnit\Framework\throwException;
 
 class ZiaciController extends Controller
 {
+    /**
+     * @param Request $request
+     * @throws \Exception
+     */
     public function import(Request $request)
     {
+        $ss = $request->file('image')->getClientOriginalExtension();
 
         $request->validate([
-            'file_input' => 'required'
+            'image' => 'required'
         ]);
-
-        Excel::import(new ZiaciImport(), $request->file('file_input')->path(), null, \Maatwebsite\Excel\Excel::XLSX);
-
+        if ($ss == 'xls' || $ss == 'xlsx') {
+            Excel::import(new ZiaciImport(), $request->file('image')->path(), null, \Maatwebsite\Excel\Excel::XLSX);
+            return response()->json([
+                'message' => 'Vaše údaje boli nahraté do databázy'
+            ]);
+        } else {
+            throw new \Exception('Súbor nie je .xls alebo xlsx');
+        }
     }
 }
