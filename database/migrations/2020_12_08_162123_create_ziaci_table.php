@@ -18,6 +18,7 @@ class CreateZiaciTable extends Migration
             $table->string('meno');
             $table->string('priezvisko');
             $table->boolean('stipendium');
+            $table->string('isic')->unique();
         });
     }
 
